@@ -1,0 +1,15 @@
+{
+    "express": {
+        "port": 16134
+    },
+    "mongo": {
+        "host": "",
+        "database": "",
+        "username": "",
+        "password": ""
+    },
+    "secret": {
+        "adminSalt": "",
+        "userSalt": ""
+    }
+}
