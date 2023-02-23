@@ -5,11 +5,10 @@
  */
 
 async function main () {
-
+    
+    await require('./mongo')();
+    
     require('./express');
-
-    require('./mongo');
-
 }
 
 main();

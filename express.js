@@ -39,12 +39,11 @@ app.use(cookieParser());
 app.use(routers);
 
 // 设置端口
-console.log(`Epxress 运行于 ${port}`);
+console.info(`Epxress 运行于 ${port}`);
 app.set('port', port);
 
-// 设置端口
-logger.info(`Epxress 运行于 ${port}`);
-app.set('port', port);
+// 创建 HTTP 服务实例
+const server = http.createServer(app);
 
 server.listen(port);
 server.on('error', onError);

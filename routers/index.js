@@ -9,6 +9,6 @@ const rootRouter = require('./root');
 const manageRouter = require('./manage');
 
 router.use('/', rootRouter);
-router.use('/manage', authMid, manageRouter);
+router.use('/manage', manageRouter);
 
 module.exports = router;

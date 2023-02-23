@@ -5,10 +5,12 @@
 const mongoose = require('mongoose');
 
 module.exports = async () => {
-    
+
     const { mongo } = require('./config.json');
 
-    mongoose.connect(`mongodb://${mongo.username}:${mongo.password}@${mongo.address}/${mongo.database}`,{ useNewUrlParser: true,useUnifiedTopology: true});
+    mongoose.set('strictQuery', true);
+
+    mongoose.connect(`mongodb://${mongo.username}:${mongo.password}@${mongo.host}/${mongo.database}`, { useNewUrlParser: true, useUnifiedTopology: true });
 
     const dbInstance = mongoose.connection;
 
