@@ -2,7 +2,7 @@
  * 统计 中间件
  */
 
-const $$ = require('../utils/res');
+const $$ = require('../utils/fn');
 
 const Stat = require('../schemas/Stat');
 

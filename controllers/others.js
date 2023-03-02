@@ -4,6 +4,7 @@
 
 const axios = require('axios');
 
+const $ = require('../utils/res');
 
 module.exports = {
     async getBingWallpaper(req, res, next) {

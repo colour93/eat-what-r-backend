@@ -4,7 +4,8 @@
   "description": "吃点什么 重构 后端",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env ENV=dev node app.js",
+    "start": "node app.js"
   },
   "author": "colour93",
   "license": "ISC",

@@ -22,10 +22,10 @@ const routers = require('./routers');
 
 // 处理跨域
 const allowCors = (req, res, next) => {
-    // res.header('Access-Control-Allow-Origin', req.headers.origin);
-    // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    // res.header('Access-Control-Allow-Headers', 'Content-Type');
-    // res.header('Access-Control-Allow-Credentials','true');
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials','true');
     next();
 };
 
@@ -37,6 +37,14 @@ app.use(cookieParser());
 
 // 路由
 app.use(routers);
+
+// 404
+app.use((req, res) => {
+    res.status(404).send({
+        code: 404,
+        msg: "请求路径不存在"
+    })
+})
 
 // 设置端口
 console.info(`Epxress 运行于 ${port}`);

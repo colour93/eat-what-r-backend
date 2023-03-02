@@ -3,6 +3,7 @@
  */
 
 const $ = require('../utils/res');
+const $$ = require('../utils/fn');
 
 const School = require('../schemas/School');
 const Shop = require('../schemas/Shop');
@@ -17,7 +18,7 @@ module.exports = {
         let schoolCount, shopCount, apiTodayCount, apiTotalCount, date;
 
         // 生成日期数字串
-        date = $.getDateNumber();
+        date = $$.getDateNumber();
 
         // 获取学校总数
         schoolCount = await School.count();
@@ -108,8 +109,8 @@ module.exports = {
 
     async getSchoolList(req, res, next) {
         let result;
-        result = await School.find();
-        $.ok(res, result);
+        result = await School.find({}, { _id: 0, __v: 0 });
+        $.ok(res, { data: result });
     },
 
     async deleteSchool(req, res, next) {
@@ -203,9 +204,31 @@ module.exports = {
     },
 
     async getShopList(req, res, next) {
-        let result;
-        result = await Shop.find({}, { food: 0, drink: 0 });
-        $.ok(res, result);
+
+        let result, school;
+
+        let { schoolId } = req.query;
+
+        schoolId = parseInt(schoolId);
+
+        if (isNaN(schoolId)) {
+            $.missingParam(res);
+            return;
+        };
+
+        school = await School.findOne({ schoolId }, { _id: 0, __v: 0 });
+
+        if (!school) {
+            $.notFound(res);
+            return;
+        }
+
+        result = await Shop.find({ schoolId }, { _id: 0, __v: 0, food: 0, drink: 0, schoolId: 0, schoolName: 0 });
+
+        $.ok(res, {
+            school,
+            data: result
+        });
     },
 
     async deleteShop(req, res, next) {
@@ -341,13 +364,47 @@ module.exports = {
         };
 
         let result;
-        result = await Shop.findOne({ shopId });
+        result = await Shop.findOne({ shopId }, { _id: 0, __v: 0 });
         if (!result) {
             $.notFound(res, '店铺不存在');
             return;
         };
 
-        $.ok(res, result);
+        const school = {
+            schoolId: result.schoolId,
+            schoolName: result.schoolName
+        }
+
+        const shop = {
+            shopId: result.shopId,
+            shopName: result.shopName
+        }
+
+        let data = [];
+
+        result.food.forEach(e => {
+            data.push({
+                itemId: e.itemId,
+                itemName: e.itemName,
+                price: e.price,
+                type: 'food'
+            })
+        })
+
+        result.drink.forEach(e => {
+            data.push({
+                itemId: e.itemId,
+                itemName: e.itemName,
+                price: e.price,
+                type: 'drink'
+            })
+        })
+
+        $.ok(res, {
+            school,
+            shop,
+            data
+        });
     },
 
     async deleteItem(req, res, next) {

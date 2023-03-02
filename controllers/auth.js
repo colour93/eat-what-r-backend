@@ -2,7 +2,12 @@
  * 登录态控制器
  */
 
+const jwt = require('jsonwebtoken');
+
 const $ = require('../utils/res');
+const $$ = require('../utils/fn');
+
+const Admin = require('../schemas/Admin');
 
 module.exports = {
 
@@ -11,6 +16,8 @@ module.exports = {
         // 初始化变量
         let { user, pwd } = req.body;
         let result, token;
+
+        console.log(req.body);
 
         // 判断入参
         if (!user || !pwd) {
@@ -22,7 +29,7 @@ module.exports = {
         compareOrigin = await Admin.findOne({ user });
 
         // 比对
-        if (!compareOrigin || !$.comparePwd(pwd, 'admin', compareOrigin.pwd)) {
+        if (!compareOrigin || !$$.comparePwd(pwd, 'admin', compareOrigin.pwd)) {
             $.passwordWrong(res);
             return;
         }

@@ -18,6 +18,7 @@ module.exports = model('Shop', new Schema({
     schoolId: Number,
     tag: [String],
     delivery: Boolean,
+    location: String,
     food: [{
         itemName: String,
         itemId: {

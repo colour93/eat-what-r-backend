@@ -10,7 +10,10 @@ const manageCtrl = require('../controllers/manage');
 
 const authMid = require('../middlewares/auth');
 
-router.use(authMid);
+if (!process.env.ENV || process.env.ENV != 'dev') {
+    router.use(authMid);
+}
+
 
 // 仪表板状态获取
 router.get('/overviewStats', manageCtrl.getOverviewStats);

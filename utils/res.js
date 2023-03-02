@@ -2,8 +2,16 @@
  * 响应
  */
 
+const { response } = require('express');
+
 module.exports = {
-    // 正常返回
+    /**
+     * 正常返回
+     * @param {response} res 
+     * @param {Object} data 
+     * @param {String} msg 
+     * @returns 
+     */
     ok: (res, data, msg) => {
         if (!msg) {
             msg = "success";
@@ -15,7 +23,11 @@ module.exports = {
         });
         return;
     },
-    // 缺少参数
+    /**
+     * 缺少参数
+     * @param {response} res 
+     * @returns 
+     */
     missingParam: (res) => {
         res.send({
             code: 101,
@@ -23,7 +35,11 @@ module.exports = {
         });
         return;
     },
-    // 已存在
+    /**
+     * 已存在
+     * @param {response} res 
+     * @returns 
+     */
     exist: (res) => {
         res.send({
             code: 102,
@@ -31,7 +47,11 @@ module.exports = {
         });
         return;
     },
-    // 已存在
+    /**
+     * 密码错误
+     * @param {response} res 
+     * @returns
+     */
     passwordWrong: (res) => {
         res.send({
             code: 103,
@@ -39,7 +59,11 @@ module.exports = {
         });
         return;
     },
-    // 已存在
+    /**
+     * token 过期
+     * @param {response} res 
+     * @returns 
+     */
     tokenExpired: (res) => {
         res.send({
             code: 401,
@@ -47,7 +71,11 @@ module.exports = {
         });
         return;
     },
-    // 无权访问
+    /**
+     * 无权访问
+     * @param {response} res 
+     * @returns 
+     */
     unauthorized: (res) => {
         res.status(401).send({
             code: 401,
@@ -55,7 +83,12 @@ module.exports = {
         });
         return;
     },
-    // 未搜索到
+    /**
+     * 未找到
+     * @param {response} res 
+     * @param {String} msg 
+     * @returns 
+     */
     notFound: (res, msg) => {
         if (!msg) {
             msg = "未找到";
@@ -66,7 +99,12 @@ module.exports = {
         });
         return;
     },
-    // 403
+    /**
+     * 访问受限
+     * @param {response} res 
+     * @param {String} msg 
+     * @returns 
+     */
     forbidden: (res, msg) => {
         if (!msg) {
             msg = "forbidden";
@@ -77,7 +115,12 @@ module.exports = {
         });
         return;
     },
-    // 一些奇怪的错误
+    /**
+     * 内部错误
+     * @param {response} res 
+     * @param {String} msg 
+     * @returns 
+     */
     fetalError: (res, msg) => {
         res.send({
             code: -1,
